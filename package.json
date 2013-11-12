@@ -1,0 +1,30 @@
+{
+    "name": "connect-acl",
+    "version": "0.1.0",
+    "description": "Simple roles and permissions-based ACL for Connect and Express",
+    "main": "index.js",
+    "directories": {
+        "test": "test"
+    },
+    "scripts": {
+        "test": "mocha"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ioncreature/connect-acl.git"
+    },
+    "keywords": [
+        "middleware", "acl", "role",
+        "roles", "connect", "express",
+        "permission", "permissions"
+    ],
+    "author": "Alexander Marenin",
+    "license": "BSD-2-Clause",
+    "bugs": {
+        "url": "https://github.com/ioncreature/connect-acl/issues"
+    },
+    "devDependencies": {
+        "mocha": "1.14.x",
+        "expect.js": "0.2.x"
+    }
+}

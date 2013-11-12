@@ -1,11 +1,7 @@
 /**
+ * @licence BSD 2-Clause
  * @author Alexander Marenin
  * @date November 2013
- */
-
-/**
- * @author Marenin Alex
- * October 2013
  */
 
 var STATUS_FORBIDDEN = 403;
