@@ -18,7 +18,7 @@
         "roles", "connect", "express",
         "permission", "permissions"
     ],
-    "author": "Alexander Marenin",
+    "author": "Alexander Marenin <comrade.muchacho@gmail.com>",
     "license": "BSD-2-Clause",
     "bugs": {
         "url": "https://github.com/ioncreature/connect-acl/issues"
