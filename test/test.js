@@ -30,7 +30,7 @@ describe( 'Role', function(){
             expect( role.isUnauthorized() ).not.to.be.ok();
         });
 
-        it( 'shoule add/remove roles and check it', function(){
+        it( 'should add/remove roles and check it', function(){
             expect( role.is('user') ).not.to.be.ok();
 
             role.addRole( 'user' );

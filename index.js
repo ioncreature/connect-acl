@@ -83,10 +83,13 @@ Acl.prototype.isAuthorized = function( failureBack ){
 Acl.prototype.isUnauthorized = function( failureBack ){
     var acl = this;
     return function( req, res, next ){
-        if ( req.role && req.role.isUnauthorized() )
-            next();
+        if ( req.role )
+            if ( req.role.isUnauthorized() )
+                next();
+            else
+                acl.handleFailure( req, res, failureBack || acl.unauthorizedFailureHandler );
         else
-            acl.handleFailure( req, res, failureBack || acl.unauthorizedFailureHandler );
+            next();
     };
 };
 
