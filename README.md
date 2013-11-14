@@ -83,3 +83,14 @@ app.get( '/some/path', function( req, res ){
 });
 
 ```
+
+How to use as template helper (i.e. Jade)
+```jade
+extends layout
+block content
+    h1= title
+    if role.is('admin')
+        p Hello Admin!
+    else
+        p Hello Man!
+```
