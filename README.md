@@ -11,8 +11,8 @@ It consists of these parts:
 * Route handler helper
 * Template helper
 
-How to use
-----------
+Configuring
+-----------
 
 ```js
 // Permissions and roles config.
@@ -33,26 +33,28 @@ role.onUnauthorizedFailure( function( req, res ){
 });
 
 // Сonnect a middleware
-app.use( role.middleware );
-
-
-// Using router helper
-
-// Simple authorized/unauthorized checking
-app.get( '/', role.isAuthorized(), routes.getIndex );
-app.get( '/login', role.isUnauthorized( someCustomeFailureHandler ), routes.getLogin );
+app.use( role.middleware() );
 
 // Authorizing
 app.post( '/login', role.isUnauthorized(), function( req, res ){
     // ...
-    
-    // User should contains user.roles array, 
+
+    // User should contains user.roles array,
     // which is {string[]} and conrtains a list of role names.
     // If user.roles is falsy then user considered as authorized, but no one role won't be assigned
     req.session.user = user;
-    
+
     // ..
 });
+```
+
+Using router helper
+-------------------
+
+```js
+// Simple authorized/unauthorized checking
+app.get( '/', role.isAuthorized(), routes.getIndex );
+app.get( '/login', role.isUnauthorized( someCustomeFailureHandler ), routes.getLogin );
 
 // Check permissions
 app.get( '/article/:id', role.can('read article'), routes.getArticle );
@@ -67,9 +69,12 @@ app.get( '/user/settings', role.is(['admin', 'user']), routes.getSettings );
 
 // This checks whether user has 'admin' OR 'user' roles
 app.post( '/message/:id', role.isAny(['admin', 'user']), routes.postMessage );
+```
 
+Using in route handler
+----------------------
 
-// Using in route handler
+```js
 app.get( '/some/path', function( req, res ){
     var role = req.role;
     if ( role.can('do something') )
@@ -78,13 +83,14 @@ app.get( '/some/path', function( req, res ){
         // ...
     else if ( role.isAuthorized() )
         // ...
-    else 
+    else
         // ...
 });
-
 ```
 
-How to use as template helper (i.e. Jade)
+Using in templates (i.e. Jade)
+------------------------------
+
 ```jade
 extends layout
 block content
