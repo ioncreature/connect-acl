@@ -132,10 +132,17 @@ Acl.prototype.middleware = function(){
         req.role = new Role( acl.roles );
         res.locals.role = req.role;
         if ( req.session && req.session.user ){
-            if ( req.session.user.role )
-                req.role.addRole( req.session.user.role );
-            else
+            if ( req.session.user.role ){
+                if ( req.session.user.role instanceof Array ) {
+                    req.session.user.role.forEach( function(role) {
+                        req.role.addRole( role );
+                    });
+                } else {
+                    req.role.addRole( req.session.user.role );
+                }
+            } else {
                 req.role.setAuthorized( true );
+            }
         }
         next();
     }
