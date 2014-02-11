@@ -30,6 +30,7 @@ describe( 'Role', function(){
             expect( role.isUnauthorized() ).not.to.be.ok();
         });
 
+
         it( 'should add/remove roles and check it', function(){
             expect( role.is('user') ).not.to.be.ok();
 
@@ -52,6 +53,19 @@ describe( 'Role', function(){
             expect( role.is('user') ).not.to.be.ok();
             expect( role.isAny(['admin', 'user']) ).not.to.be.ok();
         });
+
+
+        it( 'should add multiple roles', function(){
+            role.addRole( ['admin', 'user'] );
+
+            expect( role.is('admin') ).to.be.ok();
+            expect( role.is('user') ).to.be.ok();
+            expect( role.is(['admin', 'user']) ).to.be.ok();
+            expect( role.isAny(['admin', 'user']) ).to.be.ok();
+            expect( role.can('read') ).to.be.ok();
+            expect( role.can('edit') ).to.be.ok();
+        });
+
 
         it( 'should check permissions', function(){
             expect( role.can('read') ).not.to.be.ok();

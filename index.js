@@ -216,9 +216,14 @@ Role.prototype.isUnauthorized = function(){
 };
 
 
+/**
+ * @param {string|string[]} roleName
+ */
 Role.prototype.addRole = function( roleName ){
     this.authorized = true;
-    if ( this.roles.indexOf(roleName) == -1 )
+    if ( roleName instanceof Array )
+        roleName.forEach( this.addRole, this );
+    else if ( this.roles.indexOf(roleName) == -1 )
         this.roles.push.apply( this.roles, arguments );
 };
 
