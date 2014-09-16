@@ -1,6 +1,6 @@
 {
     "name": "connect-acl",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "description": "Simple roles and permissions-based ACL for Connect and Express",
     "main": "index.js",
     "directories": {

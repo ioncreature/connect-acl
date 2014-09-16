@@ -145,11 +145,11 @@ Acl.prototype.middleware = function(){
 Acl.prototype.handleFailure = function( req, res, next, failureBack ){
     var role = req.role;
     if ( failureBack )
-        failureBack( req, res );
+        failureBack( req, res, next );
     else if ( role.isAuthorized() && this.authorizedFailureHandler )
-        this.authorizedFailureHandler( req, res );
+        this.authorizedFailureHandler( req, res, next );
     else if ( role.isUnauthorized() && this.unauthorizedFailureHandler )
-        this.unauthorizedFailureHandler( req, res );
+        this.unauthorizedFailureHandler( req, res, next );
     else
         res.send( STATUS_FORBIDDEN );
 };
