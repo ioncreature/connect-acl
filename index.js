@@ -41,7 +41,7 @@ Acl.prototype.is = function( roleName, failureBack ){
         if ( req.role && req.role.is(roleName) )
             next();
         else
-            acl.handleFailure( req, res, failureBack )
+            acl.handleFailure( req, res, next, failureBack )
     };
 };
 
@@ -56,7 +56,7 @@ Acl.prototype.isAny = function( roles, failureBack ){
         if ( req.role && req.role.isAny(roles) )
             next();
         else
-            acl.handleFailure( req, res, failureBack )
+            acl.handleFailure( req, res, next, failureBack )
     };
 };
 
@@ -71,7 +71,7 @@ Acl.prototype.isAuthorized = function( failureBack ){
         if ( req.role && req.role.isAuthorized() )
             next();
         else
-            acl.handleFailure( req, res, failureBack || acl.authorizedFailureHandler );
+            acl.handleFailure( req, res, next, failureBack || acl.authorizedFailureHandler );
     };
 };
 
@@ -87,7 +87,7 @@ Acl.prototype.isUnauthorized = function( failureBack ){
             if ( req.role.isUnauthorized() )
                 next();
             else
-                acl.handleFailure( req, res, failureBack || acl.unauthorizedFailureHandler );
+                acl.handleFailure( req, res, next, failureBack || acl.unauthorizedFailureHandler );
         else
             next();
     };
@@ -105,7 +105,7 @@ Acl.prototype.can = function( permissionName, failureBack ){
         if ( req.role && req.role.can(permissionName) )
             next();
         else
-            acl.handleFailure( req, res, failureBack )
+            acl.handleFailure( req, res, next, failureBack )
     };
 };
 
@@ -142,7 +142,7 @@ Acl.prototype.middleware = function(){
 };
 
 
-Acl.prototype.handleFailure = function( req, res, failureBack ){
+Acl.prototype.handleFailure = function( req, res, next, failureBack ){
     var role = req.role;
     if ( failureBack )
         failureBack( req, res );
