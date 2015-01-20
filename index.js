@@ -41,7 +41,7 @@ Acl.prototype.is = function( roleName, failureBack ){
         if ( req.role && req.role.is(roleName) )
             next();
         else
-            acl.handleFailure( req, res, next, failureBack )
+            acl.handleFailure( req, res, next, failureBack );
     };
 };
 
@@ -56,7 +56,7 @@ Acl.prototype.isAny = function( roles, failureBack ){
         if ( req.role && req.role.isAny(roles) )
             next();
         else
-            acl.handleFailure( req, res, next, failureBack )
+            acl.handleFailure( req, res, next, failureBack );
     };
 };
 
@@ -105,7 +105,7 @@ Acl.prototype.can = function( permissionName, failureBack ){
         if ( req.role && req.role.can(permissionName) )
             next();
         else
-            acl.handleFailure( req, res, next, failureBack )
+            acl.handleFailure( req, res, next, failureBack );
     };
 };
 
