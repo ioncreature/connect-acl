@@ -27,6 +27,7 @@ function Acl( rolesConfig ){
     this.roles = rolesConfig;
     this.authorizedFailureHandler = null;
     this.unauthorizedFailureHandler = null;
+    this.userSessionHandler = null;
 }
 
 
@@ -41,7 +42,7 @@ Acl.prototype.is = function( roleName, failureBack ){
         if ( req.role && req.role.is(roleName) )
             next();
         else
-            acl.handleFailure( req, res, next, failureBack )
+            acl.handleFailure( req, res, next, failureBack );
     };
 };
 
@@ -56,7 +57,7 @@ Acl.prototype.isAny = function( roles, failureBack ){
         if ( req.role && req.role.isAny(roles) )
             next();
         else
-            acl.handleFailure( req, res, next, failureBack )
+            acl.handleFailure( req, res, next, failureBack );
     };
 };
 
@@ -105,7 +106,7 @@ Acl.prototype.can = function( permissionName, failureBack ){
         if ( req.role && req.role.can(permissionName) )
             next();
         else
-            acl.handleFailure( req, res, next, failureBack )
+            acl.handleFailure( req, res, next, failureBack );
     };
 };
 
@@ -125,20 +126,34 @@ Acl.prototype.onUnauthorizedFailure = function( fn ){
     this.unauthorizedFailureHandler = fn;
 };
 
+/**
+ * @param {Function} fn
+ */
+Acl.prototype.userSessionHandler = function( fn ){
+    this.userSessionHandler = fn;
+};
 
 Acl.prototype.middleware = function(){
     var acl = this;
     return function( req, res, next ){
         req.role = new Role( acl.roles );
         res.locals.role = req.role;
-        if ( req.session && req.session.user ){
-            if ( req.session.user.role )
-                req.role.addRole( req.session.user.role );
-            else
-                req.role.setAuthorized( true );
+
+        var user = req.session && req.session.user;
+
+        // Allow custom lookup of user
+        if (typeof acl.userSessionHandler === 'function') {
+          user = acl.userSessionHandler(req);
         }
+
+        if ( user.role ) {
+          req.role.addRole( user.role );
+        } else {
+          req.role.setAuthorized( true );
+        }
+
         next();
-    }
+    };
 };
 
 

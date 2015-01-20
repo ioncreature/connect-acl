@@ -32,6 +32,12 @@ role.onUnauthorizedFailure( function( req, res ){
     res.redirect( '/' );
 });
 
+// Define where the user session is on the request object
+role.userSessionHandler( function( req ) {
+    // Example using custom Passport auth
+    return req.user;
+});
+
 // Сonnect a middleware
 app.use( role.middleware() );
 
